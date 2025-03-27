@@ -1,5 +1,9 @@
 import PdfToJpg from "./components/PdfToJpg";
-import JpgToPdf from "./components/JpgToPdf";
+import PdfToPng from "./components/PdfToPng";
+import JpgPngToPdf from "./components/JpgPngToPdf";
+import ChangeImg from "./components/ChangeImg";
+import ImgResizer from "./components/ImgResizer";
+
 import {useEffect} from "react";
 
 export default function App() {
@@ -31,17 +35,30 @@ export default function App() {
 
     return (
         <div style={{ textAlign: "center", padding: "20px" }}>
-            <h1>📄 PDF ↔ JPG 변환기</h1>
-            <p>PDF를 JPG로 변환하거나, 여러 장의 JPG를 PDF로 변환하세요.</p>
-
-            <div style={{ display: "flex", justifyContent: "center", gap: "50px", marginTop: "20px" }}>
-                <div>
-                    <h2>PDF → JPG 변환</h2>
-                    <PdfToJpg />
+            <h1>📄 현대백화점 Tools</h1>
+            <p>PDF문서와 이미지 문서를 안전하고 편하게 변환하세요</p>
+            <div style={{display:"flex", justifyContent:"space-around"}}>
+                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", gap: "50px", marginTop: "20px" }}>
+                    <div>
+                        <h3>PDF → JPG 변환</h3>
+                        <PdfToJpg />
+                    </div>
+                    <div>
+                        <h3>PDF → PNG 변환</h3>
+                        <PdfToPng />
+                    </div>
                 </div>
-                <div>
-                    <h2>JPG → PDF 변환</h2>
-                    <JpgToPdf />
+                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
+                    <h3>이미지<span style={{fontSize:"12px"}}>(jpg,png)</span> → PDF변환</h3>
+                    <JpgPngToPdf />
+                </div>
+                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
+                    <h3>이미지 확장자<span style={{fontSize:"12px"}}>(jpg ↔ png)</span> 변환</h3>
+                    <ChangeImg />
+                </div>
+                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
+                    <h3>이미지 사이즈 조정 <span style={{fontSize:"12px"}}>(jpg, png)</span></h3>
+                    <ImgResizer />
                 </div>
             </div>
         </div>
