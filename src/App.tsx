@@ -3,6 +3,8 @@ import PdfToPng from "./components/PdfToPng";
 import JpgPngToPdf from "./components/JpgPngToPdf";
 import ChangeImg from "./components/ChangeImg";
 import ImgResizer from "./components/ImgResizer";
+import FeedbackBoard from "./components/FeedbackBoard";
+
 
 import {useEffect} from "react";
 
@@ -35,10 +37,10 @@ export default function App() {
 
     return (
         <div style={{ textAlign: "center", padding: "20px" }}>
-            <h1>📄 현대백화점 Tools</h1>
+            <h1>📄Tools : 사내망 전용 문서변환 프로그램</h1>
             <p>PDF문서와 이미지 문서를 안전하고 편하게 변환하세요</p>
             <div style={{display:"flex", justifyContent:"space-around"}}>
-                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", gap: "50px", marginTop: "20px" }}>
+                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", marginTop: "20px" }}>
                     <div>
                         <h3>PDF → JPG 변환</h3>
                         <PdfToJpg />
@@ -61,6 +63,7 @@ export default function App() {
                     <ImgResizer />
                 </div>
             </div>
+            <FeedbackBoard />
         </div>
     );
 }

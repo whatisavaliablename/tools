@@ -43,7 +43,7 @@ export default function FileUploader({ onFilesUpload, accept, clearFiles, multip
         setProgress(0);
 
         if (accept.includes("pdf") && files.length > 1) {
-            alert("PDF to JPG 파일 변환은 하나씩만 가능합니다.");
+            alert("PDF 파일 변환은 하나씩만 가능합니다.");
             setUploading(false);
             return;
         }
