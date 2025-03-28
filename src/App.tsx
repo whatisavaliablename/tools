@@ -16,24 +16,29 @@ export default function App() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    total: 1,
-                    usepdftojpg: 0,
-                    usejpgtopdf: 0,
+                    total_visit: 1,
+                    use_pdftojpg: 0,
+                    use_pdftopng: 0,
+                    use_imgtopdf: 0,
+                    use_changeimg: 0,
+                    use_imgresizer: 0,
                 }),
-            });
-            // 세션에 로그 기록 여부 저장
+            }).then(res => res.json())
+            .then(data => console.log("🔁 로그 응답:", data))
+            .catch(err => console.error("❌ 요청 실패:", err));
+            
             sessionStorage.setItem("logSent", "true");
         } catch (error) {
             console.error("로그 저장 실패:", error);
         }
     };
-
+    
     useEffect(() => {
-        // 세션 스토리지에서 이전에 기록했는지 확인
         if (!sessionStorage.getItem("logSent")) {
             sendLog();
         }
-    }, []); // 빈 deps 배열을 유지하여 최초 마운트 시만 실행
+    }, []);
+    
 
     return (
         <div style={{ textAlign: "center", padding: "20px" }}>

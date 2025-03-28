@@ -85,10 +85,16 @@ export default function ImgResizer() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                total: 1,
-                useimgresizer: 1
+                total_visit: 0,
+                use_pdftojpg: 0,
+                use_pdftopng: 0,
+                use_imgtopdf: 0,
+                use_changeimg: 0,
+                use_imgresizer: 1,
             }),
-        });
+        }).then(res => res.json())
+        .then(data => console.log("🔁 로그 응답:", data))
+        .catch(err => console.error("❌ 요청 실패:", err));
     };
 
     return (
