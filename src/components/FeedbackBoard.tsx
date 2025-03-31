@@ -126,7 +126,12 @@ export default function FeedbackBoard() {
         <span style={{ fontSize: "15px" }}>(최근 100개 게시물만 보여집니다)</span>
       </h3>
 
-      <button className={styles.addBtn} onClick={() => setShowForm(true)}>＋</button>
+      <button
+        className={`${styles.toggleBtn} ${showForm ? styles.active : ""}`}
+        onClick={() => setShowForm(prev => !prev)}
+      >
+        <span className={styles.icon}>+</span>
+      </button>
 
       {showForm && (
         <div className={styles.newRow}>

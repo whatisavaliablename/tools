@@ -112,14 +112,14 @@ export default function ImgResizer() {
                     type="number"
                     value={width}
                     onChange={(e) => setWidth(parseInt(e.target.value))}
-                    style={{ width: "80px", marginRight: "20px" }}
+                    style={{ width: "60px", marginRight: "20px" }}
                 />
                 <label>세로(px): </label>
                 <input
                     type="number"
                     value={height}
                     onChange={(e) => setHeight(parseInt(e.target.value))}
-                    style={{ width: "80px" }}
+                    style={{ width: "60px", marginRight:"5px" }}
                 />
             </div>
 

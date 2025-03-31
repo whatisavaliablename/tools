@@ -8,21 +8,40 @@
   text-align: left;
 }
 
-.addBtn {
-  font-size: 20px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  background-color: #2d89ff;
-  color: white;
-  padding: 5px 10px;
+.toggleBtn {
+  width: 40px;
+  height: 40px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
+  background-color: #007bff; /* 파란색 */
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleBtn .icon {
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.toggleBtn.active {
+  background-color: #dc3545; /* 빨간색 */
+}
+
+.toggleBtn.active .icon {
+  transform: rotate(45deg); /* 45도 회전 → X자처럼 */
 }
 
 .newRow {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .newRow input {
