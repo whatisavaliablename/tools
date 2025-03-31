@@ -1,90 +1,75 @@
-/* FeedbackBoard.module.css */
-
 .container {
-    margin-top: 60px;
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  .addButton {
-    padding: 6px 12px;
-    font-size: 14px;
-    border: 1px solid #007bff;
-    background: #fff;
-    color: #007bff;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  .board {
-    max-height: 300px;
-    overflow-y: auto;
-    margin: 0 auto;
-    width: 90%;
-    border-radius: 10px;
-    background: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .tableHeader {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .tableCell {
-    padding: 6px;
-    text-align: left;
-  }
-  
-  .input {
-    width: 90%;
-  }
-  
-  .passwordInput {
-    width: 80px;
-    margin-right: 5px;
-  }
-  
-  .submitButton {
-    padding: 4px 8px;
-    font-size: 13px;
-    border: 1px solid #28a745;
-    background: #e6ffe6;
-    color: #28a745;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .voteButton {
-    margin-right: 10px;
-    background: #e6f0ff;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-    padding: 4px 8px;
-    cursor: pointer;
-    font-size: 13px;
-    color: #007bff;
-  }
-  
-  .deleteButton {
-    cursor: pointer;
-    color: red;
-    font-weight: bold;
-    font-size: 16px;
-    visibility: hidden;
-  }
-  
-  .row:hover .deleteButton {
-    visibility: visible;
-  }
-  
+  margin-top: 60px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.addBtn {
+  font-size: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #2d89ff;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.newRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.newRow input {
+  padding: 5px;
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.row:hover {
+  background-color: #f5f5f5;
+}
+
+.left {
+  flex: 1;
+  font-size: 14px;
+}
+
+.date {
+  font-size: 12px;
+  color: #888;
+  margin-left: 10px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.deleteBox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deleteBox input {
+  padding: 4px;
+}
