@@ -44,7 +44,7 @@ export default function App() {
         <div style={{ textAlign: "center", padding: "20px" }}>
             <h1>📄Tools : 사내망 전용 문서변환 프로그램</h1>
             <p>PDF문서와 이미지 문서를 안전하고 편하게 변환하세요</p>
-            <div style={{display:"flex", justifyContent:"space-around"}}>
+            <div style={{display:"flex", justifyContent:"space-around",maxWidth:"1000px",margin:"0 auto"}}>
                 <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", marginTop: "20px" }}>
                     <div>
                         <h3>PDF → JPG 변환</h3>
@@ -55,17 +55,21 @@ export default function App() {
                         <PdfToPng />
                     </div>
                 </div>
-                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
-                    <h3>이미지<span style={{fontSize:"12px"}}>(jpg,png)</span> → PDF변환</h3>
-                    <JpgPngToPdf />
+                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", marginTop: "20px" }}>
+                    <div>
+                        <h3>이미지<span style={{fontSize:"12px"}}>(jpg,png)</span> → PDF변환</h3>
+                        <JpgPngToPdf />
+                    </div>
+                    <div>
+                        <h3>이미지 확장자<span style={{fontSize:"12px"}}>(jpg ↔ png)</span> 변환</h3>
+                        <ChangeImg />
+                    </div>
                 </div>
-                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
-                    <h3>이미지 확장자<span style={{fontSize:"12px"}}>(jpg ↔ png)</span> 변환</h3>
-                    <ChangeImg />
-                </div>
-                <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-start", marginTop:"20px"}}>
-                    <h3>이미지 사이즈 조정 <span style={{fontSize:"12px"}}>(jpg, png)</span></h3>
-                    <ImgResizer />
+                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "top", marginTop: "20px" }}>
+                    <div>
+                        <h3>이미지 사이즈 조정 <span style={{fontSize:"12px"}}>(jpg, png)</span></h3>
+                        <ImgResizer />
+                    </div>
                 </div>
             </div>
             <FeedbackBoard />
