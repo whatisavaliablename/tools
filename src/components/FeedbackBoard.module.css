@@ -1,51 +1,57 @@
 .container {
-  margin-top: 60px;
-  border-top: 1px solid #ccc;
-  padding-top: 20px;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+  margin:120px 0;
+  padding:0 20%;
   text-align: left;
 }
 
-.toggleBtn {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  background-color: #007bff; /* 파란색 */
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  position: relative;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.container h3{
+  font-size:28px;
+  font-weight: 800;
 }
 
-.toggleBtn .icon {
-  display: inline-block;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease;
-}
-
-.toggleBtn.active {
-  background-color: #dc3545; /* 빨간색 */
-}
-
-.toggleBtn.active .icon {
-  transform: rotate(45deg); /* 45도 회전 → X자처럼 */
+.container h3 span {
+  margin-left:10px;
+  color:#0fb77e;
 }
 
 .newRow {
   display: flex;
-  gap: 10px;
+  gap: 1%;
   margin: 10px 0;
 }
 
 .newRow input {
-  padding: 5px;
+  padding: 0 30px 0 20px;
+  background:#f0f0f0;
+  border-radius: 4px;
+  border:1px solid #f0f0f0;
+  height:50px;
+  font-size:16px;
+  font-weight:500;
+}
+
+.newRow input::placeholder{
+  color:#999999
+}
+
+.newRow input:nth-of-type(1){
+  width:12%;
+}
+.newRow input:nth-of-type(2){
+  width:54%;
+}
+.newRow input:nth-of-type(3){
+  width:20%;
+}
+.newRow button{
+  width:10%;
+  border:1px solid #0fb77e;
+  border-radius: 4px;
+  background: #0fb77e;
+  font-size: 16px;
+  font-weight: 500;
+  color:#fff;
+  cursor: pointer;
 }
 
 .list {

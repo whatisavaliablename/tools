@@ -11,7 +11,6 @@ interface Feedback {
 
 export default function FeedbackBoard() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [showForm, setShowForm] = useState(false);
   const [newAuthor, setNewAuthor] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -52,7 +51,6 @@ export default function FeedbackBoard() {
         setNewAuthor("");
         setNewMessage("");
         setNewPassword("");
-        setShowForm(false);
         fetchFeedbacks();
       } else {
         alert(data.message);
@@ -123,41 +121,32 @@ export default function FeedbackBoard() {
     <div className={styles.container}>
       <h3>
         남기고 싶은 의견이 있으신가요?
-        <span style={{ fontSize: "15px" }}>(최근 100개 게시물만 보여집니다)</span>
+        <span>{`${feedbacks.length}개`}</span>
       </h3>
 
-      <button
-        className={`${styles.toggleBtn} ${showForm ? styles.active : ""}`}
-        onClick={() => setShowForm(prev => !prev)}
-      >
-        <span className={styles.icon}>+</span>
-      </button>
-
-      {showForm && (
-        <div className={styles.newRow}>
-          <input
-            maxLength={10}
-            placeholder="작성자"
-            value={newAuthor}
-            onChange={(e) => setNewAuthor(e.target.value)}
-          />
-          <input
-            maxLength={50}
-            placeholder="내용"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="비밀번호"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            autoComplete="off"
-            name="not-password"
-          />
-          <button onClick={handleAdd}>등록</button>
-        </div>
-      )}
+      <div className={styles.newRow}>
+        <input
+          maxLength={10}
+          placeholder="이름"
+          value={newAuthor}
+          onChange={(e) => setNewAuthor(e.target.value)}
+        />
+        <input
+          maxLength={50}
+          placeholder="소중한 의견은 개발자에게 큰 힘이됩니다."
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          autoComplete="off"
+          name="not-password"
+        />
+        <button onClick={handleAdd}>글쓰기</button>
+      </div>
 
       <div className={styles.list}>
         {feedbacks.slice(0, visibleCount).map((item) => (
