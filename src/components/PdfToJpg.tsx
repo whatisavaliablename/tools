@@ -92,20 +92,44 @@ export default function PdfToJpg() {
                     console.error("PDF 변환 오류:", error);
                     alert("PDF 변환 중 오류가 발생했습니다.");
                     setConverting(false);
+                    setClearFiles(true);
                 }
             };
         } catch (error) {
             console.error("파일 읽기 오류:", error);
             alert("파일을 읽는 중 오류가 발생했습니다.");
             setConverting(false);
+            setClearFiles(true);
         }
     };
 
     return (
         <div>
-            <FileUploader onFilesUpload={handleFilesUpload} accept="application/pdf" clearFiles={clearFiles} multiple={false} />
-            {converting && <p>🔄 변환 중...</p>}
-            {uploadCompleted && !converting && <button onClick={handleConvert}>변환하기</button>}
+            <FileUploader onFilesUpload={handleFilesUpload} accept="application/pdf" clearFiles={clearFiles} multiple={false} isResizer={false}
+ />
+            {converting && <p 
+                style={{margin:"0",backgroundColor: "#0fb77e",
+                color: "white",
+                padding: "10px 20px",
+                border : "2px solid #0fb77e",
+                borderRadius: "0 0 6px 6px",
+                display:"block",
+                fontSize:"16px",
+                height:"28px"
+            }}>🔄 변환 중...</p>}
+            {uploadCompleted && !converting && <button
+             style={{backgroundColor: "#0fb77e",
+                color: "white",
+                padding: "9px 20px 11px",
+                border : "2px solid #0fb77e",
+                borderRadius: "0 0 6px 6px",
+                cursor: "pointer",
+                display:"block",
+                width: "100%",
+                height: "50px",
+                fontSize:"16px"
+            }}
+             onClick={handleConvert}>변환하기</button>}
         </div>
     );
 }

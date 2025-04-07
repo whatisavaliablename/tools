@@ -1,36 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import styles from "./FileUploader.module.css"
 
 interface FileUploaderProps {
     onFilesUpload: (files: File[]) => void;
     accept: string;
     clearFiles: boolean;
     multiple?: boolean;
+    isResizer : boolean;
 }
 
-export default function FileUploader({ onFilesUpload, accept, clearFiles, multiple = true }: FileUploaderProps) {
+export default function FileUploader({ onFilesUpload, accept, clearFiles, multiple = true, isResizer }: FileUploaderProps) {
+    
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [dragging, setDragging] = useState(false);
+    const [dragCounter, setDragCounter] = useState(0);
+    
 
-    if (clearFiles && selectedFiles.length > 0) {
-        setSelectedFiles([]);
-    }
+    useEffect(() => {
+        if (clearFiles && selectedFiles.length > 0) {
+          setSelectedFiles([]);
+        }
+      }, [clearFiles]);
 
-    const handleDragOver = (event: React.DragEvent) => {
-        event.preventDefault();
-        setDragging(true);
+    const handleDragEnter = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragCounter(prev => {
+            const next = prev + 1;
+            if (next === 1) setDragging(true); // 처음 진입할 때만 true
+            return next;
+        });
     };
 
-    const handleDragLeave = () => {
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragCounter(prev => {
+        const next = prev - 1;
+        if (next === 0) setDragging(false); // 마지막 나갈 때만 false
+        return next;
+    });
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         setDragging(false);
-    };
-
-    const handleDrop = (event: React.DragEvent) => {
-        event.preventDefault();
-        setDragging(false);
-        startUpload(Array.from(event.dataTransfer.files));
-    };
+        setDragCounter(0); // ✅ 드래그 카운터 초기화
+        const files = Array.from(e.dataTransfer.files);
+        startUpload(files);
+      };
 
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -65,39 +86,53 @@ export default function FileUploader({ onFilesUpload, accept, clearFiles, multip
             onFilesUpload(files);
         }, 1500);
     };
-    
+
 
     return (
-        <div
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            style={{
-                padding: "20px",
-                border: `2px dashed ${dragging ? "blue" : "#ccc"}`,
-                textAlign: "center",
-                cursor: "pointer",
-            }}
-        >
-            <p>여기에 파일을 드래그하세요</p>
-            <input type="file" accept={accept} multiple={multiple} onChange={handleFileInput} />
+        <div className={`${styles.wrap} ${dragging ? styles.dragging : ""}`}>
+            <div
+                className={styles.container}
+                onDragEnter={handleDragEnter}
+                onDragOver={(e) => e.preventDefault()} // 필수
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+            >
+                <label className={styles.iconText}>
+                {uploading
+                    ?
+                    <><br/>
+                        UPLOADING
+                        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
+                    </>
+                    : selectedFiles.length === 0
+                    ? 
+                    <>
+                        <p>파일을 이곳에 드래그하세요.</p>
+                    </>
+                    : selectedFiles.length > 0 && (
+                    <>
+                        <div className={`${styles.fileList} ${isResizer&& styles.isResize}`}>
+                            <span>변환할 파일</span>
+                            {selectedFiles.map((file) => file.name).join(", ")}
+                        </div>
+                    </>
+                    )}
+                </label>
+            </div>
+            
+            <input
+            type="file"
+            accept={accept}
+            multiple={multiple}
+            onChange={handleFileInput}
+            className={styles.uploadInput}
+            id="fileInput"
+            />
 
-            {uploading && (
-                <div>
-                    <p>🔄 업로드 중... {progress}%</p>
-                    <progress value={progress} max="100"></progress>
-                </div>
-            )}
-
-            {selectedFiles.length > 0 && !uploading && (
-                <div>
-                    <h4>선택된 파일:</h4>
-                    <ul>
-                        {selectedFiles.map((file, index) => (
-                            <li key={index}>{file.name}</li>
-                        ))}
-                    </ul>
-                </div>
+            {(selectedFiles.length === 0) && 
+            (<label htmlFor="fileInput" className={styles.uploadButton}>
+                파일 선택하기
+            </label>
             )}
         </div>
     );

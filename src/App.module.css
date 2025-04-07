@@ -1,0 +1,47 @@
+:global(body), :global(html) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    margin: 0;
+  }
+}
+  
+.main {
+  padding: 0 20%;
+  text-align: center;
+}
+
+.main .components {
+  display: flex;
+  gap: 4%;
+}
+
+.main .components:last-of-type {
+  margin-top:60px;
+}
+
+.main .components .component {
+  flex : 1;
+}
+
+.main .component h3{
+  text-align: left;
+  font-size:18px;
+  margin: 0 0 10px
+}
+
+
+.title {
+  line-height:45px;
+  margin: 50px 0;
+  text-align: left;
+  font-size:28px;
+  font-weight: 800;
+}
+
+.title span{
+  color:#0fb77e;
+}

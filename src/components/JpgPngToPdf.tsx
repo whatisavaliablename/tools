@@ -17,6 +17,7 @@ export default function JpgPngToPdf() {
 
         if (validFiles.length !== files.length) {
             alert("JPG 또는 PNG 파일만 업로드 가능합니다.");
+            setClearFiles(true);
             return;
         }
 
@@ -85,9 +86,28 @@ export default function JpgPngToPdf() {
 
     return (
         <div>
-            <FileUploader onFilesUpload={handleFilesUpload} accept="image/jpeg,image/png" clearFiles={clearFiles} />
-            {converting && <progress value={progress} max="100"></progress>}
-            {uploadCompleted && !converting && <button onClick={handleConvert}>변환하기</button>}
+            <FileUploader onFilesUpload={handleFilesUpload} accept="image/jpeg,image/png" clearFiles={clearFiles} isResizer={false}/>
+            {converting && <p 
+                style={{margin:"0",backgroundColor: "#0fb77e",
+                color: "white",
+                padding: "10px 20px",
+                border : "2px solid #0fb77e",
+                borderRadius: "0 0 6px 6px",
+                display:"block",
+                fontSize:"16px",
+                height:"28px"
+            }}>🔄 변환 중...</p>}
+            {uploadCompleted && !converting && <button style={{backgroundColor: "#0fb77e",
+                color: "white",
+                padding: "9px 20px 11px",
+                border : "2px solid #0fb77e",
+                borderRadius: "0 0 6px 6px",
+                cursor: "pointer",
+                display:"block",
+                width: "100%",
+                height: "50px",
+                fontSize:"16px"
+            }} onClick={handleConvert}>변환하기</button>}
         </div>
     );
 }

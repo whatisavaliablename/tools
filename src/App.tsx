@@ -4,6 +4,8 @@ import JpgPngToPdf from "./components/JpgPngToPdf";
 import ChangeImg from "./components/ChangeImg";
 import ImgResizer from "./components/ImgResizer";
 import FeedbackBoard from "./components/FeedbackBoard";
+import Header from "./components/Header";
+import styles from "./App.module.css"
 
 
 import {useEffect} from "react";
@@ -41,38 +43,47 @@ export default function App() {
     
 
     return (
-        <div style={{ textAlign: "center", padding: "20px" }}>
-            <h1>📄Tools : 사내망 전용 문서변환 프로그램</h1>
-            <p>PDF문서와 이미지 문서를 안전하고 편하게 변환하세요</p>
-            <div style={{display:"flex", justifyContent:"space-around",maxWidth:"1000px",margin:"0 auto"}}>
-                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", marginTop: "20px" }}>
-                    <div>
+        <>
+        <Header/>
+            <div className={styles.main} id="document-tools">
+
+                <div className={styles.title}>
+                    <span>정보유출</span> 걱정없이<br/>
+                    <span>안전하고 편하게</span> 편환하세요!
+                </div>
+
+                <div className={styles.components}>
+                    <div className={styles.component}>
                         <h3>PDF → JPG 변환</h3>
                         <PdfToJpg />
                     </div>
-                    <div>
+                    <div className={styles.component}>
                         <h3>PDF → PNG 변환</h3>
                         <PdfToPng />
                     </div>
-                </div>
-                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "center", marginTop: "20px" }}>
-                    <div>
+                    <div className={styles.component}>
                         <h3>이미지<span style={{fontSize:"12px"}}>(jpg,png)</span> → PDF변환</h3>
                         <JpgPngToPdf />
                     </div>
-                    <div>
+                </div>
+                <div className={styles.components}>
+                    <div className={styles.component}>
                         <h3>이미지 확장자<span style={{fontSize:"12px"}}>(jpg ↔ png)</span> 변환</h3>
                         <ChangeImg />
                     </div>
-                </div>
-                <div style={{ display: "flex", flexDirection : "column" ,justifyContent: "top", marginTop: "20px" }}>
-                    <div>
+                    <div className={styles.component}>
                         <h3>이미지 사이즈 조정 <span style={{fontSize:"12px"}}>(jpg, png)</span></h3>
                         <ImgResizer />
                     </div>
+                    <div className={styles.component} style={{visibility:"hidden"}}>
+                        레이아웃 사이즈 조정용 임시 컴포넌트
+                    </div>
                 </div>
             </div>
-            <FeedbackBoard />
-        </div>
+
+            <div id="feedback-board">
+                <FeedbackBoard />
+            </div>
+        </>
     );
 }

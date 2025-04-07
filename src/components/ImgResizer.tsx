@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FileUploader from "./FileUploader";
 import JSZip from "jszip";
+import styles from "./ImgResizer.module.css"
 
 export default function ImgResizer() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -11,7 +12,8 @@ export default function ImgResizer() {
   const [height, setHeight] = useState<number>(512);
   const [originalWidth, setOriginalWidth] = useState<number | null>(null);
   const [originalHeight, setOriginalHeight] = useState<number | null>(null);
-  const [keepRatio, setKeepRatio] = useState(false);
+  const [keepRatio, setKeepRatio] = useState(true);
+  const [isChecked, setIsChecked] = useState(true);
 
   const handleFilesUpload = async (files: File[]) => {
     const validFiles = files.filter(file =>
@@ -22,6 +24,7 @@ export default function ImgResizer() {
 
     if (validFiles.length !== files.length) {
       alert("JPG 또는 PNG 파일만 업로드 가능합니다.");
+      setClearFiles(true);
       return;
     }
 
@@ -120,6 +123,7 @@ export default function ImgResizer() {
           total_visit: 0,
           use_pdftojpg: 0,
           use_pdftopng: 0,
+          
           use_imgtopdf: 0,
           use_changeimg: 0,
           use_imgresizer: 1,
@@ -131,53 +135,84 @@ export default function ImgResizer() {
   };
 
   return (
-    <div>
+    <div className={styles.wrap}>
       <FileUploader
         onFilesUpload={handleFilesUpload}
         accept="image/jpeg, image/png"
         clearFiles={clearFiles}
         multiple={true}
+        isResizer={true}
       />
 
-      <div style={{ marginTop: "10px" }}>
-        <label>가로(px): </label>
-        <input
-          type="number"
-          value={width}
-          onChange={(e) => handleWidthChange(e.target.value)}
-          style={{ width: "80px", marginRight: "20px" }}
-        />
-        <label>세로(px): </label>
-        <input
-          type="number"
-          value={height}
-          onChange={(e) => handleHeightChange(e.target.value)}
-          style={{ width: "80px" }}
-        />
-      </div>
-      <label style={{ marginLeft: "20px", display:"block" }}>
-        <input
-        type="checkbox"
-        checked={keepRatio}
-        onChange={(e) => {
-            setKeepRatio(e.target.checked);
-            if (e.target.checked && originalWidth && originalHeight) {
-            setWidth(originalWidth);
-            setHeight(originalHeight);
-            }
-        }}
-        />{" "}
-        원본 비율 유지
-    </label>
+      
+      {(uploadCompleted && !converting) ? (
+      <div className={styles.field}>
+        <div className={styles.inputBox}>
+          <div className={styles.inputWrap}>
+            <input
+              type="number"
+              value={width}
+              onChange={(e) => handleWidthChange(e.target.value)}
+              placeholder=" 가로"
+            />
+            <span className={styles.unit}>px</span>
+          </div>
+          {isChecked?
+          <label htmlFor="checkbox" className={`${styles.checkBox} ${styles.isChecked}`}></label>
+          :<label htmlFor="checkbox" className={`${styles.checkBox}`}></label>}
+          <input
+            type="checkbox"
+            id="checkbox"
+            checked={keepRatio}
+            onChange={(e) => {
+                setIsChecked(!isChecked)
+                setKeepRatio(e.target.checked);
+                if (e.target.checked && originalWidth && originalHeight) {
+                setWidth(originalWidth);
+                setHeight(originalHeight);
+                }
+            }}
+          />
+          <div className={styles.inputWrap}>
+            <input
+              type="number"
+              value={height}
+              onChange={(e) => handleHeightChange(e.target.value)}
+              placeholder=" 세로"
+            />
+            <span className={styles.unit}>px</span>
+          </div>
+        </div>
+      </div>) : null
+      }
 
-      {converting && <p>🔄 리사이징 중...</p>}
+      {converting && <p 
+         style={{margin:"0",backgroundColor: "#0fb77e",
+          color: "white",
+          padding: "10px 20px",
+          border : "2px solid #0fb77e",
+          borderRadius: "0 0 6px 6px",
+          display:"block",
+          fontSize:"16px",
+          height:"28px"
+          }}
+         >🔄 파일 변환중...</p>}
 
       {uploadCompleted && !converting && (
-        <button
+        <button style={{backgroundColor: "#0fb77e",
+          color: "white",
+          padding: "9px 20px 11px",
+          border : "2px solid #0fb77e",
+          borderRadius: "0 0 6px 6px",
+          cursor: "pointer",
+          display:"block",
+          width: "100%",
+          height: "50px",
+          fontSize:"16px"
+      }}
           onClick={handleConvert}
-          style={{ marginTop: "30px" }}
         >
-          리사이징해서 저장하기
+          파일 변환하기
         </button>
       )}
     </div>

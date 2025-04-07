@@ -1,0 +1,108 @@
+/* FileUploader.module.css */
+
+.wrap:hover .container {
+  border : 2px solid #0fb77e;
+}
+
+.wrap:hover .uploadButton {
+  border : 2px solid #0fb77e;
+  background : #0fb77e;
+}
+
+.wrap.dragging .container{
+  border : 2px solid #0fb77e;
+}
+
+.wrap.dragging .uploadButton {
+  border : 2px solid #0fb77e;
+  background : #0fb77e;
+}
+
+.container {
+  padding: 30px 40px 20px;
+  border: 2px solid #f0f0f0;
+  border-radius: 6px 6px 0 0;
+  text-align: center;
+  background: #f0f0f0;
+  position: relative;
+  height: 100px;
+}
+
+.iconText {
+  position: relative;
+  color: #888;
+  font-size: 16px;
+  display: block;
+}
+
+.iconText p {
+    margin-top:50px;
+    margin-bottom:0;
+}
+
+.iconText p:before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  background-image: url("http://10.103.201.115:5102/common.png");
+  background-position: -40px 0px;
+  background-size: 100px 100px;
+  background-repeat: no-repeat;
+}
+
+.uploadInput {
+  display: none;
+}
+
+.uploadButton {
+  display: block;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+  height: 28px;
+  border:2px solid #000;
+  line-height:27px;
+}
+
+.container.dragging .uploadButton {
+  background-color: #0fb77e;
+}
+
+
+.progressBar {
+  margin-top:15px;
+  width: 60%;
+  height: 8px;
+  background-color: #ffc0f0;
+  border-radius: 4px;
+}
+
+.fileList {
+  margin: auto 0;
+  font-size: 16px;
+  color: #00aa55;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
+  font-weight: 500;
+}
+
+.fileList span {
+    color:#000;
+    display:block;
+}
+
+.fileList.isResize {
+  -webkit-line-clamp: 2;
+  line-height:20px;
+}
