@@ -38,6 +38,8 @@
 .iconText p {
     margin-top:50px;
     margin-bottom:0;
+    font-size:15px;
+    color:#b8b8b8;
 }
 
 .iconText p:before {
