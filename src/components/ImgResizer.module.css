@@ -19,10 +19,10 @@
 }
 .inputBox .inputWrap .unit{
     position:absolute;
-    top:0;
+    top:25%;
     right:10%;
-    line-height: 36px;
     font-weight:500;
+    line-height:1;
 }
 .inputBox input{
     width: 60%;
