@@ -14,16 +14,31 @@ export default function FeedbackBoard() {
   const [newAuthor, setNewAuthor] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [deletedId, setDeletedId] = useState<number | null>(null);
   const [deletePassword, setDeletePassword] = useState("");
+  const [likedIds, setLikedIds] = useState<number[]>([]); // 하트 상태
   const [visibleCount, setVisibleCount] = useState(10); // 처음에 10개만
+  const [totalCount, setTotalCount] = useState(0); 
+  
+
+  const handleDeleteClick = (id: number) => {
+    if (deletedId === id) {
+      setDeletedId(null);
+      setDeletePassword(""); // 비밀번호 입력값 초기화
+    } else {
+      setDeletedId(id);
+      setDeletePassword(""); // 새로 열릴 때도 초기화
+    }
+  };
 
   const fetchFeedbacks = async () => {
     try {
       const res = await fetch("/backend/feedback.php");
       const data = await res.json();
+      console.log("📦 응답", data);
       if (data.success) {
-        setFeedbacks(data.data); // 최대 100개만 서버에서 전달
+        setFeedbacks(data.data);       // 최근 100개만
+        setTotalCount(data.total);     // 전체 개수
       }
     } catch (e) {
       console.error("불러오기 실패", e);
@@ -69,7 +84,6 @@ export default function FeedbackBoard() {
       });
       const data = await res.json();
       if (data.success) {
-        setDeletingId(null);
         setDeletePassword("");
         fetchFeedbacks();
       } else {
@@ -86,7 +100,7 @@ export default function FeedbackBoard() {
       alert("이미 추천하셨습니다.");
       return;
     }
-
+  
     try {
       const res = await fetch("/backend/feedback.php", {
         method: "PUT",
@@ -95,12 +109,11 @@ export default function FeedbackBoard() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedbacks((prev) =>
-          prev.map((f) =>
-            f.id === id ? { ...f, votes: Number(f.votes) + 1 } : f
-          )
+        setFeedbacks(prev =>
+          prev.map(f => f.id === id ? { ...f, votes: Number(f.votes) + 1 } : f)
         );
         sessionStorage.setItem(votedKey, "1");
+        setLikedIds(prev => [...prev, id]); // 하트 클릭 기록
       } else {
         alert(data.message);
       }
@@ -121,12 +134,14 @@ export default function FeedbackBoard() {
     <div className={styles.container}>
       <h3>
         남기고 싶은 의견이 있으신가요?
-        <span>{`${feedbacks.length}개`}</span>
+        <p>
+          지금까지 보내주신 의견<span className={styles.count}>{`총 ${totalCount}개`}</span>
+        </p>
       </h3>
 
       <div className={styles.newRow}>
         <input
-          maxLength={10}
+          maxLength={8}
           placeholder="이름"
           value={newAuthor}
           onChange={(e) => setNewAuthor(e.target.value)}
@@ -149,49 +164,50 @@ export default function FeedbackBoard() {
       </div>
 
       <div className={styles.list}>
-        {feedbacks.slice(0, visibleCount).map((item) => (
-          <div
-            key={item.id}
-            className={styles.row}
-            onMouseEnter={() => setDeletingId(item.id)}
-            onMouseLeave={() => setDeletingId(null)}
-          >
+      {feedbacks.slice(0, visibleCount).map((item) => (
+        <div key={item.id}>
+          <div className={styles.row}>
             <div className={styles.left}>
-              <strong>{item.author}</strong>: {item.message}
-              <span className={styles.date}>({item.created_at.split(" ")[0]})</span>
+              <strong className={styles.name}>{item.author}</strong>
+              <span className={styles.message}>{item.message}</span>
             </div>
+
             <div className={styles.right}>
-              <button onClick={() => handleVote(item.id)}>
-                👍 {item.votes}
-              </button>
-              {deletingId === item.id && (
-                <div className={styles.deleteBox}>
-                  <input
-                    type="password"
-                    placeholder="비밀번호"
-                    value={deletePassword}
-                    onChange={(e) => setDeletePassword(e.target.value)}
-                    autoComplete="off"
-                    name="not-password"
-                  />
-                  <button onClick={() => handleDelete(item.id)}>삭제</button>
-                </div>
-              )}
+              <span className={styles.date}>{item.created_at.split(" ")[0]}</span>
+              <div
+                className={`${styles.like} ${likedIds.includes(item.id) ? styles.liked : ""}`}
+                onClick={() => handleVote(item.id)}
+              />
+              <span>{item.votes}</span>
+              <a onClick={() => handleDeleteClick(item.id)}>삭제</a>
             </div>
           </div>
-        ))}
 
-        {/* ➕ 더보기 버튼 */}
+          {deletedId === item.id && (
+            <div className={styles.deleteBox}>
+              <input
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+                autoComplete="off"
+                name="not-password"
+              />
+              <span onClick={() => handleDelete(item.id)}>확인</span>
+            </div>
+          )}
+        </div>
+      ))}
+
         {visibleCount < feedbacks.length && (
-          <div style={{ textAlign: "center", marginTop: "10px" }}>
-            <button onClick={handleLoadMore}>＋ 더보기</button>
+          <div className={styles.seeMore}>
+            <div onClick={handleLoadMore}> 더보기</div>
           </div>
         )}
 
-        {/* ✅ 최대 100개 표시 안내 */}
         {feedbacks.length >= 100 && visibleCount >= 100 && (
-          <div style={{ textAlign: "center", marginTop: "10px", fontSize: "13px", color: "#666" }}>
-            최대 100개까지만 보여집니다
+          <div className={styles.hundred}>
+            최근 100개의 게시글만 노출됩니다
           </div>
         )}
       </div>

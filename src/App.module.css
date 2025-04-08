@@ -10,13 +10,14 @@
 }
   
 .main {
-  padding: 0 20%;
+  padding: 0 19%;
   text-align: center;
 }
 
 .main .components {
   display: flex;
   gap: 4%;
+  min-width: 762px;
 }
 
 .main .components:last-of-type {

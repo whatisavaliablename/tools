@@ -6,7 +6,6 @@ export default function JpgPngToPdf() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [uploadCompleted, setUploadCompleted] = useState(false);
     const [converting, setConverting] = useState(false);
-    const [progress, setProgress] = useState(0);
     const [clearFiles, setClearFiles] = useState(false);
 
     const handleFilesUpload = async (files: File[]) => {
@@ -30,7 +29,6 @@ export default function JpgPngToPdf() {
         if (!uploadCompleted || selectedFiles.length === 0) return;
         setConverting(true);
         setUploadCompleted(false);
-        setProgress(0);
 
         const pdfDoc = await PDFDocument.create();
 
@@ -48,8 +46,6 @@ export default function JpgPngToPdf() {
 
             const page = pdfDoc.addPage([img.width, img.height]);
             page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-
-            setProgress(Math.round(((i + 1) / selectedFiles.length) * 100));
         }
 
         const pdfBytes = await pdfDoc.save();

@@ -1,26 +1,37 @@
 .container {
-  margin:120px 0;
-  padding:0 20%;
+  margin:90px 0;
+  padding:0 19%;
   text-align: left;
 }
 
 .container h3{
   font-size:28px;
   font-weight: 800;
+  min-width: 762px;
 }
 
-.container h3 span {
-  margin-left:10px;
-  color:#0fb77e;
+.container h3 p{
+  font-size:18px;
+  float: right;
 }
+
+.container h3 .count {
+  color:#0fb77e;
+  font-weight: 700;
+  text-align: right;
+  margin-left:10px;
+}
+
 
 .newRow {
   display: flex;
-  gap: 1%;
+  gap: 15px;
   margin: 10px 0;
+  min-width: 762px;
 }
 
 .newRow input {
+  box-sizing: border-box;
   padding: 0 30px 0 20px;
   background:#f0f0f0;
   border-radius: 4px;
@@ -35,16 +46,19 @@
 }
 
 .newRow input:nth-of-type(1){
-  width:12%;
+  flex-shrink: 0;
+  width:140px;
 }
 .newRow input:nth-of-type(2){
-  width:54%;
+  flex :1;
 }
 .newRow input:nth-of-type(3){
-  width:20%;
+  flex-shrink: 0;
+  width:180px;
 }
 .newRow button{
-  width:10%;
+  flex-shrink: 0;
+  width:115px;
   border:1px solid #0fb77e;
   border-radius: 4px;
   background: #0fb77e;
@@ -55,50 +69,117 @@
 }
 
 .list {
-  max-height: 480px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
+  margin:30px 0 60px;
 }
 
 .row {
-  display: flex;
   justify-content: space-between;
-  padding: 8px 5px;
-  border-bottom: 1px solid #eee;
-  align-items: center;
-  transition: background-color 0.3s;
-}
-
-.row:hover {
-  background-color: #f5f5f5;
+  display: flex;
+  font-size:16px;
+  margin-top:30px;
 }
 
 .left {
-  flex: 1;
-  font-size: 14px;
+  display:flex;
+  gap:15px;
 }
 
-.date {
-  font-size: 12px;
-  color: #888;
-  margin-left: 10px;
+.left .name{
+  flex-shrink: 0;
+  width:140px;
+}
+
+.left .message {
+  flex-shrink: 1;
+  text-align: left;
+  max-width: 620px;
+  min-width: 370px;
 }
 
 .right {
   display: flex;
-  align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+  width:200px;
+  color:#999;
+  justify-content: right;
+  align-items: center;
+  margin-left:30px;
+}
+
+.right .like{
+  background: url("http://10.103.201.115:5102/common.png") no-repeat 5px 5px / 100px 100px;
+  width:20px;
+  height:20px;
+  cursor: pointer;
+}
+
+.right .like.liked {
+  background-position: -15px 5px;
+}
+
+.right a{
+  color: #999;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .deleteBox {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  min-width: 732px;
+  margin-top:10px;
+  position:relative;
+  text-align: right;
+}
+
+.deleteBox::placeholder{
+  color:#999;
 }
 
 .deleteBox input {
   padding: 4px;
+  border: 1px solid #0fb77e;
+  border-radius: 4px;
+  padding:10px 40px 9px 14px;
+  height:50px;
+  box-sizing: border-box;
+  font-size:16px;
+}
+
+.deleteBox span{
+  position:absolute;
+  right:13px;
+  top:0;
+  line-height: 50px;
+  font-weight: 700;
+  color:#0fb77e;
+  cursor: pointer;
+}
+
+.seeMore{
+  margin-top:60px;
+  text-align: center;
+  min-width: 762px;
+  height:50px;
+}
+
+.seeMore div{
+  background:#f0f0f0;
+  color:#101010;
+  font-size:16px;
+  font-weight: 700;
+  height:100%;
+  width: 340px;
+  display: inline-block;
+  line-height: 50px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.hundred{
+  margin-top:60px;
+  font-size:16px;
+  color:#999;
+  font-weight:500;
+  text-align: center;
+  min-width: 762px;
 }
