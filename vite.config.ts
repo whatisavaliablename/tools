@@ -9,5 +9,13 @@ export default defineConfig({
     rollupOptions: {
         treeshake: true, // 사용되지 않는 코드 제거 강제 적용
     },
-},
+  },
+  server : {
+    proxy : {
+      "/" :{
+        target : "http://10.103.201.115:5101",
+        changeOrigin : true
+      }
+    }
+  }
 })
