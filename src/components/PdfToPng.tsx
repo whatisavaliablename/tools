@@ -4,7 +4,7 @@ import "pdfjs-dist/build/pdf.worker";
 import JSZip from "jszip";
 import FileUploader from "./FileUploader";
 
-export default function PdfToJpg() {
+export default function PdfToPng() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [uploadCompleted, setUploadCompleted] = useState(false);
     const [converting, setConverting] = useState(false);
@@ -12,7 +12,7 @@ export default function PdfToJpg() {
 
     const handleFilesUpload = async (files: File[]) => {
         if (files.length > 1) {
-            alert("PDF to JPG 파일 변환은 하나씩만 가능합니다.");
+            alert("PDF to PNG 파일 변환은 하나씩만 가능합니다.");
             return;
         }
         setSelectedFiles(files);
@@ -48,12 +48,12 @@ export default function PdfToJpg() {
                         return new Promise<Blob | null>((resolve) => {
                             canvas.toBlob((blob) => {
                                 if (blob) {
-                                    zip.file(`page-${i + 1}.jpg`, blob);
+                                    zip.file(`page-${i + 1}.png`, blob);
                                     resolve(blob);
                                 } else {
                                     resolve(null);
                                 }
-                            }, "image/jpeg");
+                            }, "image/png");
                         });
                     });
 
@@ -63,7 +63,7 @@ export default function PdfToJpg() {
                     const zipUrl = URL.createObjectURL(zipBlob);
                     const link = document.createElement("a");
                     link.href = zipUrl;
-                    link.download = "converted_images.zip";
+                    link.download = "converted_images_png.zip";
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -78,8 +78,8 @@ export default function PdfToJpg() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             total_visit: 0,
-                            use_pdftojpg: 1,
-                            use_pdftopng: 0,
+                            use_pdftojpg: 0,
+                            use_pdftopng: 1,
                             use_imgtopdf: 0,
                             use_changeimg: 0,
                             use_imgresizer: 0,
@@ -105,10 +105,14 @@ export default function PdfToJpg() {
 
     return (
         <div>
-            <FileUploader onFilesUpload={handleFilesUpload} accept="application/pdf" clearFiles={clearFiles} multiple={false} isResizer={false}
- />
-            {converting && <p 
-                style={{margin:"0",backgroundColor: "#0fb77e",
+            <FileUploader
+                onFilesUpload={handleFilesUpload}
+                accept="application/pdf"
+                clearFiles={clearFiles}
+                multiple={false}
+                isResizer={false}
+            />
+            {converting && <p style={{margin:"0",backgroundColor: "#0fb77e",
                 color: "white",
                 padding: "10px 20px",
                 border : "2px solid #0fb77e",
@@ -117,19 +121,19 @@ export default function PdfToJpg() {
                 fontSize:"16px",
                 height:"28px"
             }}>🔄 변환 중...</p>}
-            {uploadCompleted && !converting && <button
-             style={{backgroundColor: "#0fb77e",
-                color: "white",
-                padding: "9px 20px 11px",
-                border : "2px solid #0fb77e",
-                borderRadius: "0 0 6px 6px",
-                cursor: "pointer",
-                display:"block",
-                width: "100%",
-                height: "50px",
-                fontSize:"16px"
-            }}
-             onClick={handleConvert}>변환하기</button>}
+            {uploadCompleted && !converting && (
+                <button style={{backgroundColor: "#0fb77e",
+                    color: "white",
+                    padding: "9px 20px 11px",
+                    border : "2px solid #0fb77e",
+                    borderRadius: "0 0 6px 6px",
+                    cursor: "pointer",
+                    display:"block",
+                    width: "100%",
+                    height: "50px",
+                    fontSize:"16px"
+                }} onClick={handleConvert} >변환하기</button>
+            )}
         </div>
     );
 }

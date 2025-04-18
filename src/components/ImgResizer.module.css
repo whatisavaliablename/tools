@@ -1,0 +1,49 @@
+.wrap{
+    position:relative;
+}
+.wrap .field{
+    position:absolute;
+    top:95px;
+    padding:0 10%;
+}
+.inputBox {
+    display:flex;
+    width: 100%;
+    justify-content: center;
+    gap:12px;
+    align-items:center ;
+}
+.inputBox .inputWrap{
+    position: relative;
+    width: 40%;
+}
+.inputBox .inputWrap .unit{
+    position:absolute;
+    top:25%;
+    right:10%;
+    font-weight:500;
+    line-height:1;
+}
+.inputBox input{
+    width: 60%;
+    height:40px;
+    border:1px solid #dcdcdc;
+    border-radius: 4px;
+    padding:0 30% 0 10%;
+    font-size:16px;
+}
+.inputBox input::placeholder{
+    font-size:16px;
+}
+.checkBox {
+    width:20px;
+    height:15px;
+    background:url("http://10.103.201.115:5102/common.png") no-repeat -80px 2px / 100px 100px;
+}
+.checkBox.isChecked{
+    background-position:-60px 2px;
+}
+input[type="checkbox"]{
+    display: none;
+    margin:0;
+}

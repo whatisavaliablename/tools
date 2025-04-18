@@ -1,5 +1,13 @@
 import PdfToJpg from "./components/PdfToJpg";
-import JpgToPdf from "./components/JpgToPdf";
+import PdfToPng from "./components/PdfToPng";
+import JpgPngToPdf from "./components/JpgPngToPdf";
+import ChangeImg from "./components/ChangeImg";
+import ImgResizer from "./components/ImgResizer";
+import FeedbackBoard from "./components/FeedbackBoard";
+import Header from "./components/Header";
+import styles from "./App.module.css"
+
+
 import {useEffect} from "react";
 
 export default function App() {
@@ -10,40 +18,72 @@ export default function App() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    total: 1,
-                    usepdftojpg: 0,
-                    usejpgtopdf: 0,
+                    total_visit: 1,
+                    use_pdftojpg: 0,
+                    use_pdftopng: 0,
+                    use_imgtopdf: 0,
+                    use_changeimg: 0,
+                    use_imgresizer: 0,
                 }),
-            });
-            // 세션에 로그 기록 여부 저장
+            }).then(res => res.json())
+            .then(data => console.log("🔁 로그 응답:", data))
+            .catch(err => console.error("❌ 요청 실패:", err));
+            
             sessionStorage.setItem("logSent", "true");
         } catch (error) {
             console.error("로그 저장 실패:", error);
         }
     };
-
+    
     useEffect(() => {
-        // 세션 스토리지에서 이전에 기록했는지 확인
         if (!sessionStorage.getItem("logSent")) {
             sendLog();
         }
-    }, []); // 빈 deps 배열을 유지하여 최초 마운트 시만 실행
+    }, []);
+    
 
     return (
-        <div style={{ textAlign: "center", padding: "20px" }}>
-            <h1>📄 PDF ↔ JPG 변환기</h1>
-            <p>PDF를 JPG로 변환하거나, 여러 장의 JPG를 PDF로 변환하세요.</p>
+        <>
+        <Header/>
+            <div className={styles.main} id="document-tools">
 
-            <div style={{ display: "flex", justifyContent: "center", gap: "50px", marginTop: "20px" }}>
-                <div>
-                    <h2>PDF → JPG 변환</h2>
-                    <PdfToJpg />
+                <div className={styles.title}>
+                    <span>정보유출</span> 걱정없이<br/>
+                    <span>안전하고 편하게</span> 편환하세요!
                 </div>
-                <div>
-                    <h2>JPG → PDF 변환</h2>
-                    <JpgToPdf />
+
+                <div className={styles.components}>
+                    <div className={styles.component}>
+                        <h3>PDF → JPG 변환</h3>
+                        <PdfToJpg />
+                    </div>
+                    <div className={styles.component}>
+                        <h3>PDF → PNG 변환</h3>
+                        <PdfToPng />
+                    </div>
+                    <div className={styles.component}>
+                        <h3>이미지<span style={{fontSize:"12px"}}>(jpg,png)</span> → PDF변환</h3>
+                        <JpgPngToPdf />
+                    </div>
+                </div>
+                <div className={styles.components}>
+                    <div className={styles.component}>
+                        <h3>이미지 확장자<span style={{fontSize:"12px"}}>(jpg ↔ png)</span> 변환</h3>
+                        <ChangeImg />
+                    </div>
+                    <div className={styles.component}>
+                        <h3>이미지 사이즈 조정 <span style={{fontSize:"12px"}}>(jpg, png)</span></h3>
+                        <ImgResizer />
+                    </div>
+                    <div className={styles.component} style={{visibility:"hidden"}}>
+                        레이아웃 사이즈 조정용 임시 컴포넌트
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div id="feedback-board">
+                <FeedbackBoard />
+            </div>
+        </>
     );
 }
